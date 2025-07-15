@@ -1,6 +1,6 @@
 [project]
 name = "report-of-monaco-2018-racing"
-version = "0.1.0"
+version = "0.1.1"
 description = "Генератор звіту про гонку F1 Monaco 2018 з CLI інтерфейсом"
 authors = [
     {name = "Daniel Kravchenko",email = "daniel.kravchenko@protonmail.com"}
@@ -20,4 +20,4 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [project.scripts]
-report-of-monaco-2018-racing = "main:main"
+report-of-monaco-2018-racing = "report.main:main"
