@@ -57,9 +57,10 @@ class ReportMaker:
                 end_time = end_logs[abbreviation]
                 end_time = datetime.strptime(end_time, "%Y-%m-%d_%H:%M:%S.%f")
                 start_time = datetime.strptime(start_time, "%Y-%m-%d_%H:%M:%S.%f")
-                timestamp = end_time - start_time
                 if start_time >= end_time:
                     timestamp = "failed"
+                else:
+                    timestamp = end_time - start_time
                 self.drivers[abbreviation]["time"] = timestamp
 
     def build_report(self, asc=True) -> list[tuple[str, dict]]:
