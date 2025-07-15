@@ -30,10 +30,9 @@ def main() -> None:
     )
 
     args = parser.parse_args()
-    asc = not args.desc
 
     report = ReportMaker(folder_path=args.files)
-    report.print_report(asc=asc, driver=args.driver)
+    report.print_report(asc=args.desc, driver=args.driver)
 
 
 if __name__ == "__main__":

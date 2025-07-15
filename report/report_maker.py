@@ -74,7 +74,7 @@ class ReportMaker:
             key=lambda item: (
                 item[1]["time"] if item[1]["time"] != "failed" else timedelta.max
             ),
-            reverse=not asc,
+            reverse=asc,
         )
         return sorted_drivers
 
