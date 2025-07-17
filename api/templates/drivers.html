@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drivers list</title>
+</head>
+<body>
+<span><a href="/report">← Main</a> </span>
+<span><a href="/report/drivers/?order=asc">↑ Ascending order</a> </span>
+<span><a href="/report/drivers/?order=desc">↓ Descending order</a> </span>
+  <table>
+    <tr>
+        <th>#</th>
+        <th>Abbreviation</th>
+        <th>Name</th>
+        <th>Team</th>
+    </tr>
+    {% for abbr, info in drivers %}
+      {% if not driver_id or abbr == driver_id %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td><a href="/report/drivers/?driver_id={{ abbr }}">{{ abbr }}</a></td>
+        <td>{{ info.name }}</td>
+        <td>{{ info.team }}</td>
+    </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
+</body>
+</html>

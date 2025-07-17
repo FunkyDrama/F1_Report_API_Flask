@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>F1 Monaco 2018 Report</title>
+</head>
+
+<body>
+<span><a href="/report/drivers/">→ All drivers info</a></span>
+<span><a href="/report/?order=asc">↑ Ascending order</a></span>
+<span><a href="/report/?order=desc">↓ Descending order</a></span>
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Team</th>
+            <th>Time</th>
+        </tr>
+        {% for abbr, info in report %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ info.name }}</td>
+            <td>{{ info.team }}</td>
+            <td>{{ info.time }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

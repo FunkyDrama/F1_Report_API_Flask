@@ -11,7 +11,7 @@ import os
 class ReportMaker:
     """Клас для створення звіту про гонку F1 Monaco 2018."""
 
-    def __init__(self, folder_path: str) -> None:
+    def __init__(self, folder_path: str = "data") -> None:
         """Ініціалізує клас ReportMaker з шляхом до папки з файлами.
         :param folder_path: Шлях до папки з файлами start.log, end.log та abbreviations.txt.
         """
@@ -32,7 +32,7 @@ class ReportMaker:
                 }
 
     @staticmethod
-    def read_log_file(file_path) -> dict[str, str]:
+    def read_log_file(file_path: Path) -> dict[str, str]:
         """Зчитує лог-файл і повертає словник з абревіатурами та часовими мітками.
         :param file_path: Шлях до лог-файлу (start.log або end.log)."""
 
@@ -63,7 +63,7 @@ class ReportMaker:
                     timestamp = end_time - start_time
                 self.drivers[abbreviation]["time"] = timestamp
 
-    def build_report(self, asc=True) -> list[tuple[str, dict]]:
+    def build_report(self, asc: bool = True) -> list[tuple[str, dict]]:
         """Створює звіт про гонщиків, їх команди та час проходження гонки.
         :param asc: Якщо True, то сортує за зростанням часу, якщо False - за спаданням.
         """
@@ -78,7 +78,7 @@ class ReportMaker:
         )
         return sorted_drivers
 
-    def print_report(self, asc=True, driver=None) -> None:
+    def print_report(self, asc: bool = True, driver: str = None) -> None:
         """Друкує звіт про гонщиків у відсортованому порядку.
         :param asc: Якщо True, то сортує за зростанням часу, якщо False - за спаданням.
         :param driver: Якщо вказано, то друкує інформацію лише про цього гонщика."""
