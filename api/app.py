@@ -25,11 +25,6 @@ def report_drivers() -> str | Response:
     order = order_param == "desc"
 
     all_drivers_report = ReportMaker().build_report()
-    sorted_drivers = sorted(
-        all_drivers_report,
-        key=lambda item: item[1]["name"],
-        reverse=order,
-    )
 
     driver_id = request.args.get("driver_id")
     if driver_id:
@@ -37,5 +32,10 @@ def report_drivers() -> str | Response:
             if abbr == driver_id:
                 return render_template("driver.html", abbr=abbr, info=info)
         abort(404, description="Driver not found")
-
+    else:
+        sorted_drivers = sorted(
+            all_drivers_report,
+            key=lambda item: item[1]["name"],
+            reverse=order,
+        )
     return render_template("drivers.html", drivers=sorted_drivers, driver_id=driver_id)

@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>F1 Monaco 2018 Report</title>
-</head>
+{% extends "base.html" %}
+{% block title %}Drivers Report{% endblock title %}
+
+{% block content %}
 
 <body>
-<span><a href="/report/drivers/">→ All drivers info</a></span>
-<span><a href="/report/?order=asc">↑ Ascending order</a></span>
-<span><a href="/report/?order=desc">↓ Descending order</a></span>
+<span><a href="{{ url_for('report_drivers') }}">→ All drivers info</a></span>
+<span><a href="{{ url_for('report', order='asc') }}">↑ Ascending order</a></span>
+<span><a href="{{ url_for('report', order='desc') }}">↓ Descending order</a></span>
     <table>
         <tr>
             <th>#</th>
@@ -26,4 +24,4 @@
         {% endfor %}
     </table>
 </body>
-</html>
+{% endblock content %}

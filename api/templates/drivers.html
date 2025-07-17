@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Drivers list</title>
-</head>
+{% extends "base.html" %}
+{% block title %}Drivers list{% endblock title %}
+
+{% block content %}
 <body>
-<span><a href="/report">← Main</a> </span>
-<span><a href="/report/drivers/?order=asc">↑ Ascending order</a> </span>
-<span><a href="/report/drivers/?order=desc">↓ Descending order</a> </span>
+<span><a href="{{ url_for('report') }}">← Main</a> </span>
+<span><a href="{{ url_for('report_drivers', order='asc') }}">↑ Ascending order</a> </span>
+<span><a href="{{ url_for('report_drivers', order='desc') }}">↓ Descending order</a> </span>
   <table>
     <tr>
         <th>#</th>
@@ -19,7 +17,7 @@
       {% if not driver_id or abbr == driver_id %}
     <tr>
         <td>{{ loop.index }}</td>
-        <td><a href="/report/drivers/?driver_id={{ abbr }}">{{ abbr }}</a></td>
+        <td><a href="{{ url_for('report_drivers', driver_id=abbr) }}">{{ abbr }}</a></td>
         <td>{{ info.name }}</td>
         <td>{{ info.team }}</td>
     </tr>
@@ -27,4 +25,4 @@
     {% endfor %}
   </table>
 </body>
-</html>
+{% endblock content %}
