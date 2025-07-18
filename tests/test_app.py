@@ -1,3 +1,7 @@
+"""Тестування API додатку Flask для генерації звіту про гонку F1.
+Цей модуль містить тести для перевірки коректності роботи API, включаючи генерацію звітів,
+перегляд інформації про гонщиків та обробку помилок."""
+
 import pytest
 from collections.abc import Iterator
 from flask.testing import FlaskClient

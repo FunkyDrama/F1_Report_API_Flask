@@ -1,0 +1,93 @@
+swagger: "2.0"
+info:
+  title: Racing Report API
+  version: "1.0"
+
+basePath: /api/v1
+schemes:
+  - http
+
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/xml
+
+paths:
+  /report/:
+    get:
+      summary: Get full race report
+      description: Returns the full race report of all drivers
+      parameters:
+        - name: order
+          in: query
+          type: string
+          enum: [asc, desc]
+          required: false
+          description: Sort order (asc for ascending, desc for descending)
+        - name: format
+          in: query
+          type: string
+          enum: [json, xml]
+          required: false
+          description: Response format
+      responses:
+        200:
+          description: A list of all drivers in specified format
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Driver'
+        400:
+          description: Invalid query parameter
+
+  /report/drivers/:
+    get:
+      summary: Get report for one or all drivers
+      description: Returns information about one driver (by ID) or all drivers
+      parameters:
+        - name: driver_id
+          in: query
+          type: string
+          required: false
+          description: Abbreviation of the driver
+        - name: order
+          in: query
+          type: string
+          enum: [asc, desc]
+          required: false
+          description: Sort order for full list (ignored if driver_id is given)
+        - name: format
+          in: query
+          type: string
+          enum: [json, xml]
+          required: false
+          description: Response format
+      responses:
+        200:
+          description: Driver information or list of drivers
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Driver'
+        400:
+          description: Invalid query parameter
+        404:
+          description: Driver not found
+
+definitions:
+  Driver:
+    type: object
+    properties:
+      abbr:
+        type: string
+        example: VET
+      name:
+        type: string
+        example: Sebastian Vettel
+      team:
+        type: string
+        example: Ferrari
+      time:
+        type: string
+        example: 1:14.345

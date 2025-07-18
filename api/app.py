@@ -1,3 +1,7 @@
+"""Генератор звіту про гонку F1 Monaco 2018.
+Цей модуль містить Flask-додаток, який надає API для генерації звітів про гонку та гонщиків.
+"""
+
 from flask import Flask, render_template, request, abort, Response
 from report.report_maker import ReportMaker
 from pathlib import Path
@@ -9,7 +13,9 @@ app = Flask(__name__, template_folder=str(TEMPLATE_DIR))
 
 @app.route("/report/")
 def report() -> str:
-    """Генератор звіту про гонку F1 Monaco 2018."""
+    """Генератор звіту про гонку F1 Monaco 2018.
+    :return: HTML-сторінка зі звітом про гонку."""
+
     order = request.args.get("order", True)
     order = True if order == "desc" else False
     all_report = ReportMaker().build_report(asc=order)
@@ -18,7 +24,10 @@ def report() -> str:
 
 @app.route("/report/drivers/")
 def report_drivers() -> str | Response:
-    """Генератор звіту про всіх гонщиків та перегляд інформації про окремого гонщика."""
+    """Генератор звіту про всіх гонщиків та перегляд інформації про окремого гонщика.
+    :return: HTML-сторінка зі звітом про гонщиків або інформацією про окремого гонщика.
+    """
+
     order_param = request.args.get("order")
     if order_param and order_param not in {"asc", "desc"}:
         abort(400, description="Invalid order parameter")
