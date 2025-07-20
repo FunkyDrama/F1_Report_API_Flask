@@ -2,23 +2,24 @@
 Цей модуль містить клас ReportMaker, який відповідає за зчитування лог-файлів,
 отримання інформації про гонщиків та формування звіту."""
 
-import os.path
 from datetime import datetime, timedelta
 from pathlib import Path
-import os
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / "data"
 
 
 class ReportMaker:
     """Клас для створення звіту про гонку F1 Monaco 2018."""
 
-    def __init__(self, folder_path: str = "data") -> None:
+    def __init__(self, folder_path: Path = DATA_DIR) -> None:
         """Ініціалізує клас ReportMaker з шляхом до папки з файлами.
         :param folder_path: Шлях до папки з файлами start.log, end.log та abbreviations.txt.
         """
 
-        self.start_file = Path(os.path.join(folder_path, "start.log"))
-        self.end_file = Path(os.path.join(folder_path, "end.log"))
-        self.abbreviations_file = Path(os.path.join(folder_path, "abbreviations.txt"))
+        self.start_file = folder_path / "start.log"
+        self.end_file = folder_path / "end.log"
+        self.abbreviations_file = folder_path / "abbreviations.txt"
         self.drivers = {}
 
     def get_drivers_info(self) -> None:

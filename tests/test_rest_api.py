@@ -5,24 +5,37 @@ This module contains tests for the API endpoints that generate reports about the
 import pytest
 from flask.testing import FlaskClient
 from collections.abc import Iterator
-from unittest.mock import patch
+from db.config import db
+from db.models import Driver, Report
 
 from api.rest_api import app
 
-mock_report = [
-    ("SVF", {"name": "Sebastian Vettel", "team": "FERRARI", "time": "0:01:04.415000"}),
-    ("LHM", {"name": "Lewis Hamilton", "team": "MERCEDES", "time": "failed"}),
-]
-
 
 @pytest.fixture(autouse=True)
-def mock_reportmaker() -> Iterator[None]:
-    """Fixture for mocking ReportMaker.build_report."""
-    with patch(
-        "report.report_maker.ReportMaker.build_report",
-        return_value=mock_report,
-    ):
-        yield
+def setup_db() -> Iterator[None]:
+    """Setup in-memory DB and insert mock data."""
+    db.init(":memory:")
+    db.connect()
+    db.create_tables([Driver, Report])
+
+    drivers = [
+        {"abbr": "SVF", "name": "Sebastian Vettel", "team": "FERRARI"},
+        {"abbr": "LHM", "name": "Lewis Hamilton", "team": "MERCEDES"},
+    ]
+    Driver.insert_many(drivers).execute()
+    svf_driver = Driver.get(Driver.abbr == "SVF")
+    lhm_driver = Driver.get(Driver.abbr == "LHM")
+
+    reports = [
+        {"driver": svf_driver, "time": 64415},
+        {"driver": lhm_driver, "time": None},
+    ]
+    Report.insert_many(reports).execute()
+
+    yield
+
+    db.drop_tables([Driver, Report])
+    db.close()
 
 
 @pytest.fixture
@@ -77,10 +90,11 @@ def test_single_driver_json(client: FlaskClient) -> None:
 
 def test_single_driver_xml(client: FlaskClient) -> None:
     """Test for getting a single driver in XML format"""
-    response = client.get("/api/v1/report/drivers/?driver_id=SVF&format=xml")
+    response = client.get("/api/v1/report/drivers/?driver_id=LHM&format=xml")
     assert response.status_code == 200
     assert b"<driver>" in response.data
-    assert b"SVF" in response.data
+    assert b"LHM" in response.data
+    assert b"failed" in response.data
 
 
 def test_driver_not_found(client: FlaskClient) -> None:
