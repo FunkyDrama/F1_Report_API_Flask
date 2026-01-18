@@ -91,7 +91,7 @@ class ReportMaker:
                     time = (
                         str(info["time"])[:-3] if info["time"] != "failed" else "failed"
                     )
-                    print(f"{i:>2}. {info["name"]:<18} | {info['team']:<25} | {time}")
+                    print(f"{i:>2}. {info['name']:<18} | {info['team']:<25} | {time}")
             return
         else:
             for i, (abbr, info) in enumerate(sorted_drivers, start=1):

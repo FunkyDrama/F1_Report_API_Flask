@@ -1,7 +1,7 @@
 """Database models for the application using Peewee ORM.
 This module defines the Driver and Report models with their fields and relationships."""
 
-from peewee import *
+from peewee import CharField, ForeignKeyField, IntegerField
 from db.config import BaseModel
 
 
